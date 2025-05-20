@@ -17,10 +17,12 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
     @Column(nullable = false)
@@ -32,8 +34,20 @@ public class Booking {
     @Column(nullable = false)
     private int adults;
 
+    @Column(nullable = false)
     private int children;
 
     @Column(nullable = false)
     private double totalPrice;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status = BookingStatus.PENDING;
+
+    public enum BookingStatus {
+        PENDING,
+        CONFIRMED,
+        CANCELLED,
+        COMPLETED
+    }
 } 
